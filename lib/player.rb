@@ -1,45 +1,36 @@
-class Event
-	attr_accessor :start_date, :duration, :title, :email 
-		def initialize(date, durée, titre, mail)
-			require 'time'
-			@start_date = Time.parse(date)
-			@duration = durée
-			@title = titre
-			@email = []
-			@email << mail
+require "pry"
 
+class Player
+	attr_accessor :name, :life_points
+		def initialize(name)
+			@name = name
+			@life_points = 10
 		end
 
-		def postpone_24h
+		def show_state
+			puts "#{@name} a #{@life_points} points de vie."
+		end
+
+		def gets_damage(damage)
+			@life_points = @life_points - damage
+			if @life_points <= 0
+				puts "le joueur #{@name} a été tué !"
+			end
+		end
+
+		def attacks(cible)
+			puts " #{@name} attaque #{cible.name} "
+			damage = compute_damage
+
+			cible.gets_damage(damage)
+			puts "il lui inflige #{damage} points de damage"
 			
-			@start_date += 60*60*24
 		end
 
-		def end_date
-			@start_date + @duration*60
+		def compute_damage
+			return rand(1..6)
 		end
 
-		def is_past?
-			return @start_date < Time.now
-		end
+end
 
-		def is_futur?
-			!self.is_past?
-		end
-
-		def is_soon?
-			return @start_date < Time.now + 60*30
-		end
-
-		def to_s
-			puts ">Titre : #{@title}"
-			puts ">Date de début : #{@start_date}"
-			puts ">Durée : #{@duration} minutes"
-			print ">Invités :"
-			puts @email.join[]
-		end
-	end
-
-
-	end
 
