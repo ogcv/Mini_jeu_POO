@@ -23,7 +23,7 @@ class Player
 			damage = compute_damage
 
 			cible.gets_damage(damage)
-			puts "il lui inflige #{damage} points de damage"
+			puts "il inflige #{damage} points de damage"
 			
 		end
 
@@ -33,4 +33,56 @@ class Player
 
 end
 
+class HumanPlayer < Player
+	attr_accessor :weapon_level, :life_points
 
+		def initialize(name)
+			@life_points = 100
+			@weapon_level = 1
+			
+			
+
+			
+		end	
+			
+			def show_state
+			puts "#{@name} a #{@life_points} points de vie et une arme de niveau #{weapon_level}"
+			end
+
+			def compute_damage
+			rand(1..6) * @weapon_level
+			end
+		
+		def search_weapon
+			result = 0 + rand(6)
+			puts "tu as trouvé une nouvelle arme de niveau #{result} !!"
+			if result <= @weapon_level
+				puts " SHIT ! ..."
+			elsif result > @weapon_level
+				puts "Youhou ! elle est meilleur que ton arme actuelle  tu la prends"
+				@weapon_level = result
+			end
+		end
+
+		def search_health_pack
+			result = rand(1..6)
+				puts "#{result}"
+				if result == 1 
+					puts "tu n'as rien trouvé.."
+				
+				elsif result > 1 && result < 6
+					puts "Bravo, tu as gagné un pack de +50 points de vie !"
+					@life_points = @life_points + 50
+					if @life_points > 100; @life_points = 100
+					
+					end
+				
+				elsif result == 6 
+					puts "Waow, tu as trouvé un pack de +80 points de vie!"
+					@life_points = life_points + 80
+					if @life_points > 100; @life_points = 100
+				end
+			end
+		end
+		
+	end			
